@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="picu",
-    version='1.0',
+    version='1.1',
     author="Wil Tan",
     author_email="wil@cloudregistry.net",
     description="Python ctypes-based ICU Wrapper",
