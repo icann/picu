@@ -423,7 +423,7 @@ class ICUCommon(object):
 
     @property
     def scriptIsRightToLeft(self):
-        return self._getfunc("u_charDirection", restype=UBool)
+        return self._getfunc("uscript_isRightToLeft", restype=UBool)
 
     @property
     @memoized
