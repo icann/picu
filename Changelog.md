@@ -1,5 +1,9 @@
 # Changelog for picu
 
+## 1.2 (2021-04-27)
+### New features
+- Wrap new ICU methods
+
 ## 1.1 (2020-12-04)
 ### New features
 - Add more debug information in IDNA exceptions

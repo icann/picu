@@ -395,7 +395,7 @@ class ICUCommon(object):
     @property
     @memoized
     def getIntPropertyValue(self):
-        return getattr(self.uc_dll, "u_getIntPropertyValue_%s" % self.ver)
+        return self._getfunc("u_getIntPropertyValue")
 
     @property
     @memoized
@@ -405,15 +405,30 @@ class ICUCommon(object):
     @property
     @memoized
     def getPropertyValueName(self):
-        func = getattr(self.uc_dll, "u_getPropertyValueName_%s" % self.ver)
-        func.restype = c_char_p
-        return func
+        return self._getfunc("u_getPropertyValueName", restype=c_char_p)
+
+    @property
+    @memoized
+    def getPropertyValueEnum(self):
+        return self._getfunc("u_getPropertyValueEnum", restype=c_int)
 
     @property
     def getScriptExtensions(self):
-        func = getattr(self.uc_dll, "uscript_getScriptExtensions_%s" % self.ver)
-        func.restype = c_int
-        return func
+        return self._getfunc("uscript_getScriptExtensions", restype=c_int)
+
+    @property
+    @memoized
+    def getCombiningClass(self):
+        return self._getfunc("u_getCombiningClass", restype=c_int8)
+
+    @property
+    def scriptIsRightToLeft(self):
+        return self._getfunc("uscript_isRightToLeft", restype=UBool)
+
+    @property
+    @memoized
+    def isDigit(self):
+        return self._getfunc("u_isdigit", restype=UBool)
 
     @memoized_property
     def _u_charName(self):
@@ -752,6 +767,18 @@ class ICUCommon(object):
                                                  prop_type).decode('utf-8'))
 
         return out
+
+    def is_combining_mark(self, cp):
+        return self.get_prop_value(cp, 'General_Category') in ['Nonspacing_Mark', 'Spacinf_Mark']
+
+    def is_script_rtl(self, script):
+        script_prop = self.property_by_name('Script')
+        script_enum = self.getPropertyValueEnum(script_prop.enum, script.encode('ascii'))
+
+        return self.scriptIsRightToLeft(script_enum)
+
+    def is_digit(self, cp):
+        return self.isDigit(cp)
 
     #### IDNA ####
     @memoized_property
