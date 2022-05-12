@@ -1,4 +1,4 @@
-import collections
+import collections.abc
 import functools
 
 
@@ -14,7 +14,7 @@ class memoized(object):
 
     def __call__(self, *args, **kwargs):
         all_args = (args, tuple(sorted(kwargs)))
-        if not isinstance(all_args, collections.Hashable):
+        if not isinstance(all_args, collections.abc.Hashable):
             # uncacheable. a list, for instance.
             # better to not cache than blow up.
             return self.func(*args, **kwargs)
