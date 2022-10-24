@@ -1,5 +1,10 @@
 # Changelog for picu
 
+## 1.3 (2022-10-26)
+### New features
+- Fix deprecated module import
+- Support of Unicode up to 14.0.0 (ICU up to release 71).
+
 ## 1.2 (2021-04-27)
 ### New features
 - Wrap new ICU methods
