@@ -777,6 +777,10 @@ class ICUCommon(object):
 
         return self.scriptIsRightToLeft(script_enum)
 
+    def is_rtl(self, cp):
+        script = self.get_script(cp)
+        return self.is_script_rtl(script)
+
     def is_digit(self, cp):
         return self.isDigit(cp)
 
