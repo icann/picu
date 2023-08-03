@@ -1,5 +1,9 @@
 # Changelog for picu
 
+## 1.4 (2023-08-04)
+### New features
+- Add a method to check if a codepoint script is rtl
+
 ## 1.3 (2022-10-26)
 ### New features
 - Fix deprecated module import
