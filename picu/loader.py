@@ -891,7 +891,9 @@ class ICUCommon(object):
         return self.idna_process(s, self.uidna_nameToUnicode, self._uidna_nameToUnicode, uidna)
 
 
+# See https://unicode-org.github.io/icu/processes/release/tasks/versions.html
 KNOWN_ICU_VERSIONS = (
+    '74',  # Unicode 15.1
     '71',
     '70',  # Unicode 14.0
     '69',
