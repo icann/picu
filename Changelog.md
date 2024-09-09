@@ -1,5 +1,10 @@
 # Changelog for picu
 
+## 1.5 (2024-09-08)
+### New features
+- Support of Unicode up to 15.0.1 (ICU up to release 74)
+
+
 ## 1.4 (2023-08-04)
 ### New features
 - Add a method to check if a codepoint script is rtl
