@@ -893,6 +893,7 @@ class ICUCommon(object):
 
 # See https://unicode-org.github.io/icu/processes/release/tasks/versions.html
 KNOWN_ICU_VERSIONS = (
+    '76',  # Unicode 16.0
     '74',  # Unicode 15.1
     '71',
     '70',  # Unicode 14.0
