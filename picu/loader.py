@@ -769,7 +769,7 @@ class ICUCommon(object):
         return out
 
     def is_combining_mark(self, cp):
-        return self.get_prop_value(cp, 'General_Category') in ['Nonspacing_Mark', 'Spacinf_Mark']
+        return self.get_prop_value(cp, 'General_Category') in ['Nonspacing_Mark', 'Spacing_Mark']
 
     def is_script_rtl(self, script):
         script_prop = self.property_by_name('Script')
