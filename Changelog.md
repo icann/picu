@@ -1,5 +1,9 @@
 # Changelog for picu
 
+## 1.7 (2026-09-11)
+### Bug fixes
+- Fix issue with unicode supplementary code points being truncated
+
 ## 1.6 (2025-07-31)
 ### New features
 - Support of Unicode up to 16.0.0 (ICU up to release 76)
