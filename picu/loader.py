@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import struct
 import sys
 from ctypes import cdll, c_char_p, c_int, c_int8, c_uint8, c_int16, c_uint16, c_uint32, c_int32, c_void_p, POINTER, pointer, byref, create_string_buffer, sizeof, Structure
 import re
@@ -60,19 +60,27 @@ def U_SUCCESS(err_code):
 def cp_to_uchar_array(cp):
     return UCharArray_Single(cp)
 
+def uchar_array_to_uni(arr, length=None):
+    # arr contains UChar that are UTF-16
+    if length is None:
+        length = len(arr)
 
-def uchar_array_to_uni(arr, len=None):
-    return u''.join(wide_unichr(c) for (i, c) in enumerate(arr) if (len is None or i < len))
+    data = struct.pack("<%dH" % length, *arr[:length])
+    return data.decode("utf-16-le")
 
 
-def uchar_p_to_uni(arr, len=None):
-    return u''.join(wide_unichr(arr[i]) for i in range(len.value))
+def uchar_p_to_uni(arr, length):
+    return uchar_array_to_uni(arr, length.value)
 
 
 def str_to_uchar_array_with_len(s):
-    slen = len(s)
+    # IDNA X-To-Y functions expect UTF-16
+    # see UChar in https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/umachine_8h.html#a6bb9fad572d65b305324ef288165e2ac
+    data = s.encode("utf-16-le")
+    slen = len(data) // 2
     UCharArray = c_uint16 * slen
-    return UCharArray(*(ord(c) for c in s)), slen
+    values = struct.unpack("<%dH" % slen, data)
+    return UCharArray(*values), slen
 
 
 def uchar_array(alen):
@@ -93,7 +101,7 @@ def icu_re_factory(icu):
 
         def groups(self):
             """ ICU regex does not seem to support the notion of a group that did not participate in a match.
-                In those circumstances, it simply return the empty string so we can't tell.
+                In those circumstances, it simply returns the empty string so we can't tell.
                 This is why we don't accept a `default` argument.
             """
             if not self._matched_groups:
